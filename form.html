@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="CSS/form.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Ojuju:wght@200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/461ad1934b.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="icon" href="">
+  <title>BOOK RIDE</title>
+</head>
+
+<body style="background-color: white; font-family: 'Nunito', sans-serif !important;">
+  <section id="NAV-HEADING">
+    <div class="nav">
+      <!-- <a href="index.html"><img class="nav-form-logo" src="ASSETS/180px-x-60px-1-1-206x35.png" alt="lgo"></a> -->
+      <a class="nav-text" href="index.html"><h1>TAXI-FOR-YOU</h1></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="whatsapp-button">
+        <a href="https://api.whatsapp.com/send/?phone=%2B447838479992&text&type=phone_number&app_absent=0">
+            <img style="width: auto; height: 70px;" src="ASSETS/whatsapp.png" alt="whatsapp-icon">
+        </a>
+    </div>
+</section>
+
+  <section id="FORM" style="margin-top: 50px; margin-bottom: 50px;">
+
+    <form id="booking-form">
+      <div id="form-container">
+        <h1 style="color: #11468F; font-family: Roboto; font-weight: bold;">Book Your Ride</h1>
+        <div class="form-group">
+          <label for="name"><b>Name</b></label>
+          <input type="text" class="form-control" id="name" placeholder="Enter Full Name" required>
+        </div>
+        <div class="form-group">
+          <label for="name"><b>Email</b></label>
+          <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
+        </div>
+        <div class="form-group">
+          <label for="pickup"><b>Pickup Location</b></label>
+          <input type="text" class="form-control" id="pickup" placeholder="Enter Pickup Location" required>
+        </div>  
+
+
+        <div class="form-group">
+          <label for="fleetOptions"><b>Select no of stops in between journey</b></label>
+          <select class="form-control" id="via-number" onchange="addVia()" required>
+            <option value="" disabled selected>#</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+          </select>
+        </div> 
+
+        <div id="via-input" style="gap: 20px;"></div>
+
+
+        <div class="form-group">
+          <label for="dropoff"><b>Drop-off Location</b></label>
+          <input type="text" class="form-control" id="dropoff" placeholder="Enter Drop-off Location" required>
+        </div>
+        <div class="form-group">
+          <label for="phone"><b>Phone Number</b></label>
+          <input type="tel" class="form-control" id="phone" placeholder="+44 1234 567890" pattern="[+]{1}[0-9]{2} [0-9]{4} [0-9]{6}" required>
+          <small>Enter a phone number starting with country code</small>
+        </div>
+        <div class="form-group">
+          <label for="fleetOptions"><b>Choose Fleet</b></label>
+          <select class="form-control" id="fleetOptions" required>
+            <option value="" disabled selected>Select Fleet</option>
+            <option value="Up to 4 people--2 large bags">Up to 4 </option>
+            <option value="Up to 6 people--3 large bags">Up to 6 </option>
+            <option value="Up to 8 people--4 large bags">Up to 8 </option>
+            <option value="Up to 4 people--2 large bags Wheelchair">Up to 4 with Wheelchair</option>
+            <option value="Up to 6 people--3 large bags Wheelchair">Up to 6 Wheelchair</option>
+            <option value="Up to 8 people--4 large bags Wheelchair">Up to 8 Wheelchair</option>
+          </select>
+        </div>
+        <div class="date-time">
+          <div class="form-group">
+            <label for="date"><b>Date</b></label>
+            <input type="date" class="form-control" id="date" required>
+          </div>
+          <div class="form-group" style="margin-left: 10px;">
+            <label for="time"><b>Time</b></label>
+            <input type="time" class="form-control" id="time" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fleetOptions"><b>Choose Payment Method</b></label>
+          <select class="form-control" id="paymentmethode" required>
+            <option value="" disabled selected>Select Payment Method</option>
+            <option value="Debit Card">Debit Card<i class="fa-solid fa-credit-card"></i></option>
+            <option value="Cash">Cash<i class="fa-solid fa-wallet"></i></option>
+          </select>
+        </div>
+        <button id="submit-button" type="button" class="btn btn-warning btn-lg" onclick="submit_click(); calculateDistance();">Submit</button>
+      </div>
+    </form>
+    </div>
+
+
+    <div id="confirmation-form">
+      <h2 style="color: #11468F; font-family: 'Open Sans',sans-serif; font-weight: bold;">Booking Details</h2>
+      <p class="confirm-p"><b>Name:</b> <span id="confirmed-name"></span></p>
+      <p class="confirm-p"><b>Email:</b> <span id="confirmed-email"></span></p>
+      <p class="confirm-p"><b>Phone no:</b> <span id="confirmed-phone"></span></p>
+      <p class="confirm-p"><b>Pickup Location:</b> <span id="confirmed-pickup"></span></p>
+      <p class="confirm-p"><b>Via:</b> <span id="confirmed-via"></span></p>
+      <p class="confirm-p"><b>Drop-off Location:</b> <span id="confirmed-dropoff"></span></p>
+      <p class="confirm-p"><b>Selected Fleet:</b> <span id="confirmed-fleet"></span></p>
+      <p class="confirm-p"><b>Date:</b> <span id="confirmed-date"></span></p>
+      <p class="confirm-p"><b>Time:</b> <span id="confirmed-time"></span></p>
+      <p class="confirm-p"><b>payment Method:</b> <span id="confirmed-Payment-Methode"></span></p>
+      <h3 class="confirm-p"><b>Price:</b> <span id="confirmed-price"></span></h3>
+      <form>
+        <input type="checkbox" id="price-Check" name="price-Check" value="price-Check" required>
+        <label for="price-Check">If the pickup or dropoff location is an airport, an additional fee of £5 will be applied</label>
+      </form>
+      <button type="button" class="btn btn-warning" onclick="confirmBooking()">Back</button>
+      <button type="button" class="btn btn-warning" onclick="confirm_form()">Confirm</button>
+    </div>
+
+  </section>
+
+  <section id="footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            <h3>TAXI-FOR-YOU</h1>
+            <!-- <img data-aos="fade-up" data-aos-duration="1000" class="footer-img" src="ASSETS/180px-x-60px-1-1-206x35.png" alt="logo"> -->
+        </div>
+        <div class="footer-info">
+            <h2>Areas We Cover</h2>
+            <ul>
+                <li>Bedfordshire</li>
+                <li>Biggleswade</li>
+                <li>Dunstable</li>
+                <li>Flitwick</li>
+                <li>Houghton Regis</li>
+                <li>Leighton buzzard</li>
+                <li>Luton</li>
+                <li>Hertfordshire</li>
+                <li>Buckinghamshire</li>
+                <li>Central London</li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#ABOUT-US">ABOUT US</a></li>
+                <li><a href="#SERVICES">SERVICES</a></li>
+                <li><a href="#FLEETS">FLEETS</a></li>
+                <li><a href="#AIRPORT-DIRECTORY">AIRPORT DIRECTORY</a></li>
+                <li><a href="index.html"><button type="button" class="btn btn-outline-warning">Home</button></a></li>
+                <li><a href="quotation.html"><button type="button" class="btn btn-outline-warning">Quotation</button></a></li>
+                
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h2>Contact Information</h2>
+            <ul>
+                <li><b>Email:</b> <a href="enquiries@speedlinetaxis.org.uk">enquiries@taxi-for-you.org.uk</a></li>
+                <li><b>Phone:</b> 07838-479-992</li>
+                <li><b>Address:</b> 72 Romen Rd, Luton LU4 9DN, UK</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2024 TAXI-FOR-YOU. All rights reserved.
+    </div>
+    <div class="footer-div">
+      <a class="footer-icon" href=""><i class="fa-brands fa-instagram"></i></a>
+      <a class="footer-icon" href=""><i class="fa-brands fa-facebook"></i></a>
+      <a class="footer-icon" href=""><i class="fa-brands fa-twitter"></i></a>
+    </div>
+</section>
+
+  <script src="JS/form.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwncpgAXf6k-Ko0xI-oR7CeHMO0hrpUW8&libraries=geometry,places&callback=initMap"
+  async defer></script>
+
+</body>
+
+</html>
